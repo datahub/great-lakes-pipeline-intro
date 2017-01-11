@@ -1,0 +1,330 @@
+.st0{font-family:'FranklinGothic-BookItalic';}
+.st1{fill:none;stroke:#6D90B5;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+.st2{fill:none;stroke:#D7E9E7;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;}
+.st3{fill:none;stroke:#77BB72;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+.st4{font-family:'ITCFranklinGothicStd-BkCd';}
+.st5{font-family:'ITCFranklinGothicStd-DmCd';}
+.st6{fill:#E8ECEA;}
+.st7{fill:none;stroke:#3FB7ED;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+.st8{font-size:17.7073;}
+.st9{fill:none;stroke:#F6FAF6;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;}
+.st10{fill:#B5B2B0;}
+.st11{fill:#B9B6B4;}
+.st12{fill:#EDF7EF;}
+.st13{font-size:21.2487;}
+.st14{fill:#98ADC2;stroke:#000000;stroke-miterlimit:10;}
+.st15{fill:none;stroke:#BC973E;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+.st16{fill:none;stroke:#E59C59;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+.st17{fill:#BCCCE7;}
+.st18{font-size:11.8048;}
+.st19{fill:none;stroke:#CF2E2E;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+.st20{fill:#7D000C;stroke:#CF2E2E;stroke-miterlimit:10;}
+.st21{fill:#BFBDBB;}
+.st22{fill:#F7FEF3;}
+.st23{font-size:9;}
+.st24{fill:#F9F9F5;}
+.st25{font-family:'AzoSans-Italic';}
+.st26{fill:none;stroke:#CF2E2E;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+.st27{font-family:'AzoSans-Regular';}
+.st28{fill:url(#SVGID_1_);}
+.st29{fill:none;stroke:#AB88BF;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+.st30{fill:#946429;}
+.st31{fill:none;stroke:#8CC26C;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+.st32{stroke:#000000;stroke-width:0.5;}
+.st33{fill:#98ADC2;}
+.st34{fill:none;stroke:#ECB440;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+.st35{fill:none;stroke:#BCBEC0;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+.st36{font-size:15.615;}
+.st37{fill:none;}
+.st38{font-size:8.2634;}
+.st39{display:inline;}
+.st40{fill:none;stroke:#C6D4EC;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;}
+.st41{fill:#CF2E2E;} /* City label markers */
+.st42{fill:#CFD6DA;}
+.st43{stroke:#CF2E2E;stroke-miterlimit:10;}
+.st44{letter-spacing:2;}
+.st45{letter-spacing:4;}
+.st46{letter-spacing:5;}
+.st47{fill:#6D90B5;}
+.st48{fill:#F1F8FC;stroke:#A2BDE4;stroke-width:0.35;stroke-linecap:round;stroke-linejoin:round;}
+.st49{fill:none;stroke:#A99EC1;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+.st50{fill:none;stroke:#946429;stroke-width:0.5;stroke-linecap:square;stroke-linejoin:bevel;}
+.st51{font-size:10;}
+.st52{fill:none;stroke:#B4AB70;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+.st53{fill:#D98A77;} /* City label text */
+.st54{fill:none;stroke:#FFD07B;stroke-width:3;stroke-miterlimit:10;}
+// .st55{display:none;}
+.st56{fill:none;stroke:#51AC5C;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+.st57{fill:#FFFFFF;stroke:#000000;stroke-width:0.5;}
+.st58{fill:#79736E;}
+.st59{font-size:13.0125;}
+.st60{fill:none;stroke:#FFFFFF;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.st61{fill:none;stroke:#C6CF4F;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+.st62{fill:#DFF0E3;}
+
+.st0, .st4, .st5, .st25, .st27 { font-family: 'Futura Today', Arial, sans-serif; }
+.st0 { font-style: italic; }
+.st25 { font-style: italic; }
+
+.map-container,
+#detailed-map {
+    font-family: 'Futura Today', Arial, sans-serif;
+}
+
+/*----map animation styles----*/    
+#Land {}
+#Keystone {}
+#SINGLE_COLOR_PIPES {display: none;}
+
+/*----text styles----*/
+.mjs-headline {font-family: 'Futura Today Bold',Arial,serif; font-size: 54px; line-height: 40px; margin: 25% 15% 0 15%; text-align: center; background-color: rgba(99, 99, 99, .9); color: #f4f4f4; padding: 15px;}
+.mjs-deck{font-family: 'Futura Today',Arial,serif; font-size: 36px; text-align: center; margin: 0 15% 10% 15%; background-color: rgba(99, 99, 99, .9); color: #f4f4f4; padding: 15px; }
+/*.mjs-byline {color: #a92d18; font-family: Arial, serif; font-style: italic; font-size: 16px; margin: 10px; padding: 5px; text-align: center;}*/
+
+.slide-container {
+    font-family: 'Futura Today', Arial, sans-serif;
+    /*margin: 0 auto;*/ 
+    width: 35%;
+    
+    .slide {
+        float: left; 
+        font-size: 24px; 
+        color: #424242;
+        border-left: 3px solid #636363;
+        padding: 25px 35px;
+        background: rgba(255, 255, 255, 0.9);
+        // box-shadow: 0px 2px 4px rgba(49, 46, 42, 0.2), 0px 0px 10px rgba(119, 113, 106, 0.4);
+        // border-top: 1px #ccc solid;
+        // border-bottom: 1px #ccc solid;
+        div, 
+        li { margin-bottom: 0.8em; }
+    }
+
+    .spacer {
+        clear: both;
+        margin-top: 100px;
+    }
+
+    .spacer-100 { margin-top: 100%; }
+    .spacer-150 { margin-top: 150%; }
+    .spacer-200 { margin-top: 200%; }
+    .spacer-250 { margin-top: 250%; }
+    .spacer-300 { margin-top: 300%; }
+    .spacer-350 { margin-top: 350%; }
+    .spacer-400 { margin-top: 400%; }
+    .spacer-450 { margin-top: 450%; }
+    .spacer-500 { margin-top: 500%; }
+}
+
+/*----background svg position----*/
+
+#pipe-background {
+    position: fixed;
+    z-index: -9;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    max-width: 100%;
+    max-height: 100%;
+    white-space: pre;
+}
+
+.canvas-overlay {
+    width: 100%;
+    position: fixed;
+    z-index: -9;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.oil-wells {
+    position: fixed;
+    top: 350px;
+    left: 800px;
+}
+
+.oil-well {
+    position: absolute;
+}
+
+.oil-in-pipelines {
+    fill: none;
+    stroke: #674637;
+    stroke-width: 2px;
+    stroke-linecap: round;
+}
+
+#oil-production-chart-container {
+    position: fixed;
+    top: 35%;
+    right: 0%;
+    width: 70%;
+    text-align: center;
+
+    #oil-production-chart {
+       margin: auto;
+    }
+
+    .area {
+        fill: #3a2f1f;
+        fill-opacity: 0.45;
+    }
+
+    .line {
+        fill: none;
+        stroke: #3a2f1f;
+    }
+
+    .axis text,
+    .data-labels text,
+    .units-label text {
+        font-size: 14px;
+        fill: #333;
+    }
+
+    .data-markers {
+        stroke: #3a2f1f;
+        stroke-dasharray: 5,5;
+        stroke-opacity: 0.5;
+    }
+
+    line {
+        shape-rendering: crispEdges;
+    }
+}
+
+.scroll-indicator {
+    width: 3px;
+    height: 160px;
+    position: fixed;
+    z-index: 10;
+    left: 0px;
+    background: linear-gradient(to top, #fff, #666);
+    background: linear-gradient(to top, rgba(255,255,255,0), #666);
+    top: 50%;
+}
+
+#tar-sands-label {
+    font-style: italic;
+    font-style: oblique;
+    fill: #9e918a;
+    text-anchor: middle;
+}
+
+.proposed-pipeline {
+    padding-left: 15px;
+    border-left-width: 5px;
+    border-left-style: solid;
+
+    .text, .status {
+        display: inline;
+    }
+
+    .status {
+        font-weight: bold;
+    }
+}
+
+.chart-title {
+    font-size: 28px;
+    font-weight: bold;
+    fill: #333;
+    text-shadow: -2px 0 3px #DFF0E3, 
+                0 2px 3px #DFF0E3,
+                2px 0 3px #DFF0E3, 
+                0 -2px 3px #DFF0E3;
+}
+
+#NETWORK_PIPES {
+    width: 1090.39px;
+    transform: translate(445.21px, 751.16px);
+    opacity: 0.2;
+}
+
+#oil-imports-chart-container {
+    position: fixed;
+    top: 40%;
+    right: 0%;
+    width: 70%;
+}
+
+.spill-epicenter {
+  animation: blinker 1s linear infinite;
+  fill: #FF5A36;
+}
+
+@keyframes blinker {  
+  50% { opacity: 0.25; }
+}
+
+#network-legend {
+    position: fixed;
+    bottom: 18%;
+    left: 5%;
+    background-color: rgba(255,255,255,0.9);
+    box-shadow: 0px 0px 1px rgba(49, 46, 42, 0.2);
+    border-left: 3px solid #636363;
+}
+
+#spill-legend {
+    position: fixed;
+    top: 10%;
+    right: 5%;
+
+    .legend-item {
+        circle {
+            fill: #000;
+            fill-opacity: 0.6;
+            stroke: #000;
+        }
+    }
+}
+
+#detailed-pipelines {
+    transition: stroke 1s, stroke-width 1s, stroke-dasharray 1s;
+    -webkit-transition: stroke 1s, stroke-width 1s, stroke-dasharray 1s;
+    
+    #line-14 { 
+        stroke: #A36BAC;
+        transition: stroke 1s, stroke-width 1s, stroke-dasharray 1s;
+        -webkit-transition: stroke 1s, stroke-width 1s, stroke-dasharray 1s;
+    }
+    #line-61_2_ { 
+        stroke: #6CBF70;
+        transition: stroke 1s, stroke-width 1s, stroke-dasharray 1s;
+        -webkit-transition: stroke 1s, stroke-width 1s, stroke-dasharray 1s;
+    }
+    #line-61-twin { 
+        stroke: #3887C8; 
+        transition: stroke 1s, stroke-width 1s, stroke-dasharray 1s;
+        -webkit-transition: stroke 1s, stroke-width 1s, stroke-dasharray 1s;
+    }
+    #line-6a { 
+        stroke: #C63F32; 
+        transition: stroke 1s, stroke-width 1s, stroke-dasharray 1s;
+        -webkit-transition: stroke 1s, stroke-width 1s, stroke-dasharray 1s;
+    }
+    #line-5 {
+        stroke: #ECA820;
+        transition: stroke 1s, stroke-width 1s, stroke-dasharray 1s;
+        -webkit-transition: stroke 1s, stroke-width 1s, stroke-dasharray 1s;
+    }
+
+    .unfocused-pipeline {
+        stroke: #999 !important;
+    }
+
+    .focused-pipeline {
+        stroke: #FF5A36 !important;
+        stroke-width:  5px;
+    }
+}
+
+
+.focused-pipeline-text {
+    color: #FF5A36;
+    font-weight: bold;
+}
