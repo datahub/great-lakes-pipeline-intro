@@ -19,7 +19,7 @@ export default function renderSpillLegend(app) {
         .style('fill-opacity', 0.8);
 
     legend.append('rect')
-        .attr('x', -15)
+        .attr('x', -19)
         .attr('y', -15)
         .attr('width', 4)
         .attr('height', 180)

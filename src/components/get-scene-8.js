@@ -21,7 +21,7 @@ export default function getScene8(app) {
     });
 
     const interpolateOilImports = d3.scaleLinear()
-        .domain([0, 0.3, 0.9, 1])
+        .domain([0, 0.3, 0.8, 1])
         .range([0, 1, 1, 0])
         .clamp(true);
 

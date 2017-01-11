@@ -4,7 +4,7 @@
 import ScrollMagic from 'scrollmagic';
 import * as d3 from 'd3';
 
-import { wiscMichViewBox, mackinacViewBox } from './view-box';
+import { mackinacViewBox } from './view-box';
 
 export default function getScene11(app) {
     const svg = app.select('#pipe-background');
@@ -39,31 +39,42 @@ export default function getScene11(app) {
         triggerHook: 0,
     });
 
-    const interpolateHistoricOilSpills = d3.scaleLinear()
-        .domain([0, 0.10])
-        .range([1, 0])
-        .clamp(true);
+    // const interpolateHistoricOilSpills = d3.scaleLinear()
+    //     .domain([0, 0.10])
+    //     .range([1, 0])
+    //     .clamp(true);
 
-    const interpolateOilSpill = d3.scalePow().exponent(2)
-        .domain([0.1, 0.4, 0.9, 1])
-        .range([0, 1, 1, 0])
-        .clamp(true);
+    // const interpolateOilSpill = d3.scalePow().exponent(2)
+    //     .domain([0.1, 0.4, 0.9, 1])
+    //     .range([0, 1, 1, 0])
+    //     .clamp(true);
 
-    const interpolateViewBox = d3.scaleLinear()
-        .domain([0, 0.5])
-        .range([wiscMichViewBox, mackinacViewBox])
-        .interpolate(d3.interpolateString)
-        .clamp(true);
+    // const interpolateViewBox = d3.scaleLinear()
+    //     .domain([0, 0.5])
+    //     .range([wiscMichViewBox, mackinacViewBox])
+    //     .interpolate(d3.interpolateString)
+    //     .clamp(true);
 
-    function progress(event) {
-        const t = event.progress;
-        svg.attr('viewBox', interpolateViewBox(t));
-        historicOilSpills.style('opacity', interpolateHistoricOilSpills(t));
-        oilSpill.style('opacity', interpolateOilSpill(t));
+    // function progress(event) {
+    //     const t = event.progress;
+    //     svg.attr('viewBox', interpolateViewBox(t));
+    //     historicOilSpills.style('opacity', interpolateHistoricOilSpills(t));
+    //     oilSpill.style('opacity', interpolateOilSpill(t));
+    // }
+
+    function enter() {
+        // const forward = event.scrollDirection === 'FORWARD';
+
+        const transition = d3.transition()
+            .duration(2000);
+
+        svg.transition(transition).attr('viewBox', mackinacViewBox);
+        historicOilSpills.transition(transition).style('opacity', 0);
+        oilSpill.transition(transition).style('opacity', 1);
     }
 
     scene
-        .on('progress', progress);
+        .on('enter', enter);
 
     return scene;
 }

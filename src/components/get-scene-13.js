@@ -3,7 +3,7 @@
 import ScrollMagic from 'scrollmagic';
 import * as d3 from 'd3';
 
-import { mackinacViewBox, wiscViewBox } from './view-box';
+import { wiscViewBox } from './view-box';
 
 const flowSpeed = 1 / 40;
 
@@ -26,16 +26,16 @@ export default function getScene12(app) {
         triggerHook: 0,
     });
 
-    const interpolateViewBox = d3.scaleLinear()
-        .domain([0, 0.6])
-        .range([mackinacViewBox, wiscViewBox])
-        .interpolate(d3.interpolateString)
-        .clamp(true);
+    // const interpolateViewBox = d3.scaleLinear()
+    //     .domain([0, 0.6])
+    //     .range([mackinacViewBox, wiscViewBox])
+    //     .interpolate(d3.interpolateString)
+    //     .clamp(true);
 
-    const interpolateOilInPipelines = d3.scaleLinear()
-        .domain([0.9, 1])
-        .range([1, 0])
-        .clamp(true);
+    // const interpolateOilInPipelines = d3.scaleLinear()
+    //     .domain([0.9, 1])
+    //     .range([1, 0])
+    //     .clamp(true);
 
     const timer = app.datum().timer;
 
@@ -46,12 +46,14 @@ export default function getScene12(app) {
 
     function enter() {
         timer.restart(flow);
-    }
 
-    function progress(event) {
-        const t = event.progress;
-        svg.attr('viewBox', interpolateViewBox(t));
-        oilInPipelines.style('opacity', interpolateOilInPipelines(t));
+        // const forward = event.scrollDirection === 'FORWARD';
+
+        const transition = d3.transition()
+            .duration(2500);
+
+        svg.transition(transition).attr('viewBox', wiscViewBox);
+        oilInPipelines.transition(transition).style('opacity', 1);
     }
 
     function leave() {
@@ -60,7 +62,6 @@ export default function getScene12(app) {
 
     scene
         .on('enter', enter)
-        .on('progress', progress)
         .on('leave', leave);
 
     return scene;

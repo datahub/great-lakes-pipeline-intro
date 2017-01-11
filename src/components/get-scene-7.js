@@ -6,7 +6,7 @@
 import ScrollMagic from 'scrollmagic';
 import * as d3 from 'd3';
 
-import { midwestViewBox, wiscMichViewBox } from './view-box';
+import { wiscMichViewBox } from './view-box';
 
 const strokeDasharray = '4, 8';
 const flowSpeed = 1 / 75;
@@ -43,26 +43,26 @@ export default function getScene7(app) {
         triggerHook: 0,
     });
 
-    const interpolateViewBox = d3.scaleLinear()
-        .domain([0, 0.5])
-        .range([midwestViewBox, wiscMichViewBox])
-        .interpolate(d3.interpolateString)
-        .clamp(true);
+    // const interpolateViewBox = d3.scaleLinear()
+    //     .domain([0, 0.5])
+    //     .range([midwestViewBox, wiscMichViewBox])
+    //     .interpolate(d3.interpolateString)
+    //     .clamp(true);
 
-    const interpolateOpacity = d3.scaleLinear()
-        .domain([0.2, 0.4])
-        .range([0, 1])
-        .clamp(true);
+    // const interpolateOpacity = d3.scaleLinear()
+    //     .domain([0.2, 0.4])
+    //     .range([0, 1])
+    //     .clamp(true);
 
-    const interpolateOverviewMap = d3.scaleLinear()
-        .domain([0.2, 0.4])
-        .range([1, 0])
-        .clamp(true);
+    // const interpolateOverviewMap = d3.scaleLinear()
+    //     .domain([0.2, 0.4])
+    //     .range([1, 0])
+    //     .clamp(true);
 
-    const interpolateDetailMap = d3.scaleLinear()
-        .domain([0.2, 0.4])
-        .range([0, 1])
-        .clamp(true);
+    // const interpolateDetailMap = d3.scaleLinear()
+    //     .domain([0.2, 0.4])
+    //     .range([0, 1])
+    //     .clamp(true);
 
     function flow(elapsed) {
         const offset = elapsed * flowSpeed;
@@ -75,13 +75,18 @@ export default function getScene7(app) {
     // Bind the timer to the app node
     app.datum({ timer, ticking: false });
 
-    function enterForward() {
+    function enter() {
+        timer.restart(flow);
+        detailedMap.style('display', null);
+
+        // const forward = event.scrollDirection === 'FORWARD';
+
         const transition = d3.transition()
             .duration(2000);
 
         svg.transition(transition)
             .attr('viewBox', wiscMichViewBox);
-        
+
         mapContainer.transition(transition)
             .style('opacity', 0);
 
@@ -91,61 +96,16 @@ export default function getScene7(app) {
         oilInPipelines.transition(transition)
             .style('opacity', 1);
 
-        fourthLine.style('opacity', 0);
+        fourthLine.transition(transition)
+            .style('opacity', 0);
     }
 
-    function enterReverse() {
-        
-    }
-
-    function enter(event) {
-        timer.restart(flow);
-        detailedMap.style('display', null);
-        if (event.scrollDirection === 'FORWARD') enterForward();
-        if (event.scrollDirection === 'REVERSE') enterReverse();
-    }
-
-    function progress(event) {
-        const t = event.progress;
-        // mapContainer.style('opacity', interpolateOverviewMap(t));
-        // detailedMap.style('opacity', interpolateDetailMap(t));
-        // oilInPipelines.style('opacity', interpolateOpacity(t));
-        // fourthLine.style('opacity', 0);
-        // svg.attr('viewBox', interpolateViewBox(t));
-    }
-
-    function leave(event) {
+    function leave() {
         timer.stop(flow);
-        if (event.scrollDirection === 'FORWARD') leaveForward();
-        if (event.scrollDirection === 'REVERSE') leaveReverse();
-    }
-
-    function leaveForward() {
-
-    }
-
-    function leaveReverse() {
-        const transition = d3.transition()
-            .duration(2000);
-
-        svg.transition(transition)
-            .attr('viewBox', midwestViewBox);
-        
-        mapContainer.transition(transition)
-            .style('opacity', 1);
-
-        detailedMap.transition(transition)
-            .style('opacity', 0);
-
-        oilInPipelines.transition(transition)
-            .style('opacity', 0);
-
-        fourthLine.style('opacity', 0);
     }
 
     scene
         .on('enter', enter)
-        .on('progress', progress)
         .on('leave', leave);
 
     return scene;
