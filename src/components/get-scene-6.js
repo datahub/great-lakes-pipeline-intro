@@ -12,57 +12,17 @@ export default function getScene6(app) {
     const pipelines = svg.selectAll('.pipeline');
     const offPipelineCity = svg.selectAll('.off-pipeline-city');
     const detailedMap = svg.select('#detailed-map');
-
-    // const pipelineKeystone = svg.select('#Keystone');  // Red
-    // const pipelineProposedKeystone = svg.select('#proposed_keystone');  // Orange
-    // // const pipelineDakotaAccess = not on map
-    // // const pipelineNorthernGateway = not on map
-    // // const pipelineTransmountain = not on map
-    // // const pipelineEastPipeline = not on map
-    // const pipelineCushing = svg.select('#cushing_extension');  // Bright green
-    // const pipelineGulfCoast = svg.select('#gulf_coast_project');  // Spicy mustard
-    // const pipelineHouston = svg.select('#houston_lateral');  // Yellow mustard
-    // const pipelineLine13 = svg.select('#line_13');  // Yellow-green
-    // const pipelineLsr = svg.select('#LSr');  // Light blue
+    const slide5 = app.select('#slide-5');
 
     const pipelineEnbridge = svg.select('#existing_enbridge_lines'); // Purple
     const pipelineAlbertaClipper = svg.select('#Alberta_clipper');  // Pale green
     const pipelineSouthernLights = svg.select('#southern_lights');  // Dark blue
 
     const scene = new ScrollMagic.Scene({
-        triggerElement: '#trigger-6',
+        triggerElement: '#slide-6',
         duration: '100%',
         triggerHook: 1,
     });
-
-    // const interpolateViewBox = d3.scaleLinear()
-    //     .domain([0, 0.4])
-    //     .range([defaultViewBox, midwestViewBox])
-    //     .interpolate(d3.interpolateString)
-    //     .clamp(true);
-
-    // const interpolateOpacity = d3.scaleLinear()
-    //     .domain([0, 0.33])
-    //     .range([1, 0])
-    //     .clamp(true);
-
-    // const t0 = 0;
-    // const t1 = 0.6;
-
-    // const interpolateExistingEnbridge = d3.scaleLinear()
-    //     .domain([t0, t1])
-    //     .range(['#eee', '#AB88BF'])
-    //     .clamp(true);
-
-    // const interpolateAlbertaClipper = d3.scaleLinear()
-    //     .domain([t0, t1])
-    //     .range(['#eee', '#77BB72'])
-    //     .clamp(true);
-
-    // const interpolateSouthernLights = d3.scaleLinear()
-    //     .domain([t0, t1])
-    //     .range(['#eee', '#6D90B5'])
-    //     .clamp(true);
 
     function enter() {
         pipelineEnbridge.selectAll('path').style('stroke-width', 2);
@@ -76,6 +36,7 @@ export default function getScene6(app) {
 
         svg.transition(transition).attr('viewBox', midwestViewBox);
 
+        slide5.transition(transition).style('opacity', 0);
         mapContainer.transition(transition).style('opacity', 1);
         detailedMap.transition(transition).style('opacity', 0);
 

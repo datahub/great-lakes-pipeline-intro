@@ -13,7 +13,8 @@ const container = app.append('div')
 const svg = container.append('svg')
     .attr('id', 'oil-production-chart')
     .attr('width', width + margin.left + margin.right)
-    .attr('height', height + margin.top + margin.bottom);
+    .attr('height', height + margin.top + margin.bottom)
+    .style('opacity', 0);
 
 const g = svg.append('g')
     .attr('transform', `translate(${margin.left},${margin.top})`);

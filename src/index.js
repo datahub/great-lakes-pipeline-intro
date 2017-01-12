@@ -139,7 +139,6 @@ function ready(error, xml, detailedXml) {
         scene2,
         scene3,
         scene4,
-        scene5,
         scene6,
         scene7,
         scene8,
@@ -149,6 +148,9 @@ function ready(error, xml, detailedXml) {
         scene12,
         scene13,
     ]);
+
+    // Scene 5 is composed of 5 separate scenes
+    controller.addScene(scene5);
 
     svg.select('#TAR_SANDS')
         .style('opacity', 0);

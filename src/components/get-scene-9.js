@@ -6,10 +6,21 @@
 
 import ScrollMagic from 'scrollmagic';
 import * as d3 from 'd3';
+import { wiscMichViewBox } from './view-box';
+import renderSpillLegend from './render-spill-legend';
+import oilSpillsData from '../data/oil-spills';
+
+const oilSpillByKey = d3.map(oilSpillsData, d => d.key);
+
+function bindOilSpillData() {
+    const key = d3.select(this).attr('id');
+    return oilSpillByKey.get(key);
+}
 
 export default function getScene9(app) {
     const svg = app.select('#pipe-background');
     const detailedMap = svg.select('#detailed-map');
+    const oilImportsChart = app.select('#oil-imports-chart-container');
     const oilInPipelines = detailedMap.select('.oil-in-pipelines')
         .selectAll('path');
 
@@ -20,26 +31,50 @@ export default function getScene9(app) {
 
     const otherPipelines = detailedMap.selectAll('#line-6a, #line-5, #line-61_2_, #line-14');
 
-    const scene = new ScrollMagic.Scene({
-        triggerElement: '#trigger-9',
-        duration: '100%',
-        triggerHook: 0,
+    const oilSpills = detailedMap.select('#oil-spills')
+        .style('opacity', 0);
+
+    const oilSpill = oilSpills.selectAll('circle')
+        .datum(bindOilSpillData)
+        .attr('fill', null)
+        .attr('r', 0)
+        .style('fill', '#000')
+        .style('fill-opacity', 0.5)
+        .style('stroke', '#000');
+
+    const areaScale = d3.scaleLinear()
+        .domain([0, d3.max(oilSpillsData, d => d.spilled)])
+        .range([250, 4000]);
+
+    oilSpill.data().forEach((d) => {
+        const area = areaScale(d.spilled);
+        d.r = Math.sqrt(area / Math.PI);
     });
 
-    const interpolateFourthLine = d3.scaleLinear()
-        .domain([0.2, 0.55])
-        .range([0, 1])
-        .clamp(true);
+    const spillLegend = renderSpillLegend(app)
+        .style('opacity', 0);
+
+    const scene = new ScrollMagic.Scene({
+        triggerElement: '#slide-9',
+        duration: '100%',
+        triggerHook: 1,
+    });
 
     function enter() {
+        svg.attr('viewBox', wiscMichViewBox);
         otherPipelines.classed('unfocused-pipeline', true);
         focusedLine.classed('focused-pipeline', true);
         oilInPipelines.style('opacity', 0);
-    }
 
-    function progress(event) {
-        const t = event.progress;
-        fourthLine.style('opacity', interpolateFourthLine(t));
+        const transition = d3.transition()
+            .duration(500);
+
+        svg.transition(transition).style('opacity', 1);
+        oilSpills.transition(transition).style('opacity', 0);
+        spillLegend.transition(transition).style('opacity', 0);
+        oilImportsChart.transition(transition).style('opacity', 0);
+        oilInPipelines.transition(transition).style('opacity', 0);
+        fourthLine.transition(transition).style('opacity', 1);
     }
 
     function leave() {
@@ -49,7 +84,6 @@ export default function getScene9(app) {
 
     scene
         .on('enter', enter)
-        .on('progress', progress)
         .on('leave', leave);
 
     return scene;

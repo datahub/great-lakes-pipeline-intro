@@ -5,12 +5,13 @@ export default function renderSpillLegend(app) {
     const detail = detailedMap.select('#detail');
 
     const legend = detail.append('g')
-            .attr('id', 'spill-legend')
-            .attr('transform', 'translate(600, 1024)')
-        .append('g')
-            .attr('transform', 'translate(20, 20)');
+        .attr('id', 'spill-legend')
+        .attr('transform', 'translate(600, 1024)');
 
-    legend.append('rect')
+    const g = legend.append('g')
+        .attr('transform', 'translate(20, 20)');
+
+    g.append('rect')
         .attr('x', -19)
         .attr('y', -15)
         .attr('width', 230)
@@ -18,14 +19,14 @@ export default function renderSpillLegend(app) {
         .style('fill', '#fff')
         .style('fill-opacity', 0.8);
 
-    legend.append('rect')
+    g.append('rect')
         .attr('x', -19)
         .attr('y', -15)
         .attr('width', 4)
         .attr('height', 180)
         .style('fill', '#636363');
 
-    legend.append('text')
+    g.append('text')
         .attr('class', 'legend-title')
         .attr('x', 25)
         .attr('y', 30)
@@ -55,7 +56,7 @@ export default function renderSpillLegend(app) {
 
     const itemData = data.map(appendRadius);
 
-    const item = legend.selectAll('.legend-item').data(itemData)
+    const item = g.selectAll('.legend-item').data(itemData)
         .enter().append('g')
             .attr('class', 'legend-item')
             .attr('transform', d => `translate(${d.x}, ${45})`);

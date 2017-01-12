@@ -4,7 +4,7 @@
 import ScrollMagic from 'scrollmagic';
 import * as d3 from 'd3';
 
-const flowSpeed = 1 / 75;
+import { wiscMichViewBox } from './view-box';
 
 export default function getScene8(app) {
     const svg = app.select('#pipe-background');
@@ -12,55 +12,31 @@ export default function getScene8(app) {
     const detailedMap = svg.select('#detailed-map');
     const oilInPipelines = detailedMap.select('.oil-in-pipelines')
         .selectAll('path');
+    const fourthLine = detailedMap.selectAll('#line-61-twin, #line-61-twin-illinois');
     const fourthLineOil = detailedMap.select('.oil-in-line-61-twin');
 
     const scene = new ScrollMagic.Scene({
-        triggerElement: '#trigger-8',
+        triggerElement: '#slide-8',
         duration: '100%',
-        triggerHook: 0,
+        triggerHook: 1,
     });
 
-    const interpolateOilImports = d3.scaleLinear()
-        .domain([0, 0.3, 0.8, 1])
-        .range([0, 1, 1, 0])
-        .clamp(true);
-
-    const interpolateBackground = d3.scaleLinear()
-        .domain([0, 0.3, 0.8, 1])
-        .range([1, 0.4, 0.4, 1])
-        .clamp(true);
-
-    const interpolateOilInPipelines = d3.scaleLinear()
-        .domain([0.9, 1])
-        .range([1, 0])
-        .clamp(true);
-
-    const timer = app.datum().timer;
-
-    function flow(elapsed) {
-        const offset = elapsed * flowSpeed;
-        oilInPipelines.style('stroke-dashoffset', -offset);
-    }
-
     function enter() {
-        timer.restart(flow);
-    }
+        svg.attr('viewBox', wiscMichViewBox);
 
-    function progress(event) {
-        const t = event.progress;
-        svg.style('opacity', interpolateBackground(t));
-        oilImportsChart.style('opacity', interpolateOilImports(t));
-        oilInPipelines.style('opacity', interpolateOilInPipelines(t));
+        fourthLine.style('opacity', 0);
         fourthLineOil.style('opacity', 0);
-    }
-    function leave() {
-        timer.stop();
+
+        const transition = d3.transition()
+            .duration(2000);
+
+        svg.transition(transition).style('opacity', 0.3);
+        oilImportsChart.transition(transition).style('opacity', 1);
+        oilInPipelines.transition(transition).style('opacity', 0);
     }
 
     scene
-        .on('enter', enter)
-        .on('progress', progress)
-        .on('leave', leave);
+        .on('enter', enter);
 
     return scene;
 }

@@ -8,7 +8,7 @@ import { defaultViewBox, tarSandsViewBox } from './view-box';
 
 export default function getScene1(app) {
     const svg = app.select('#pipe-background');
-    // const scrollIndicator = app.select('.scroll-indicator');
+    const oilProductionChart = app.select('#oil-production-chart');
 
     const tarSands = svg.select('#TAR_SANDS')
         .style('opacity', 0);
@@ -17,37 +17,50 @@ export default function getScene1(app) {
         .style('opacity', 0);
 
     const scene = new ScrollMagic.Scene({
-        triggerElement: '#trigger-1',
+        triggerElement: '#slide-1',
         duration: '100%',
         triggerHook: 1,
     });
 
-    const interpolateTarSands = d3.scaleLinear()
-        .domain([0, 0.33])
-        .range([0, 1])
-        .clamp(true);
+    function enter() {
+        const transition = d3.transition()
+            .duration(2000);
 
-    const interpolateViewBox = d3.scaleLinear()
-        .domain([0, 0.33])
-        .range([defaultViewBox, tarSandsViewBox])
-        .interpolate(d3.interpolateString)
-        .clamp(true);
+        tarSands.transition(transition)
+            .style('opacity', 1);
 
-    // const interpolateIndicator = d3.scaleLinear()
-    //     .domain([0, 1])
-    //     .range([100, -20])
-    //     .clamp(true);
+        tarSandsLabel.transition(transition)
+            .style('opacity', 1);
 
-    function progress(event) {
-        const t = event.progress;
-        tarSands.style('opacity', interpolateTarSands(t));
-        tarSandsLabel.style('opacity', interpolateTarSands(t));
-        svg.attr('viewBox', interpolateViewBox(t));
-        // scrollIndicator.style('top', `${interpolateIndicator(t)}%`);
+        svg.transition(transition)
+            .attr('viewBox', tarSandsViewBox)
+            .style('opacity', 1);
+
+        oilProductionChart.transition(transition)
+            .style('opacity', 0);
+    }
+
+    function leave(event) {
+        const forward = event.scrollDirection === 'FORWARD';
+
+        if (!forward) {
+            const transition = d3.transition()
+                .duration(2000);
+
+            tarSands.transition(transition)
+                .style('opacity', 0);
+
+            tarSandsLabel.transition(transition)
+                .style('opacity', 0);
+
+            svg.transition(transition)
+                .attr('viewBox', defaultViewBox);
+        }
     }
 
     scene
-        .on('progress', progress);
+        .on('enter', enter)
+        .on('leave', leave);
 
     return scene;
 }

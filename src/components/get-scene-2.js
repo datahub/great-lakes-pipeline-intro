@@ -12,39 +12,22 @@ export default function getScene2(app) {
         .style('opacity', 0);
 
     const scene = new ScrollMagic.Scene({
-        triggerElement: '#trigger-2',
+        triggerElement: '#slide-2',
         duration: '100%',
-        triggerHook: 0,
+        triggerHook: 1,
     });
-
-    const interpolateOpacity = d3.scaleLinear()
-        .domain([0, 0.33])
-        .range([0, 1])
-        .clamp(true);
-
-    const interpolateBackground = d3.scaleLinear()
-        .domain([0, 0.33])
-        .range([1, 0.5])
-        .clamp(true);
 
     function enter() {
         chartScene1();
-    }
 
-    function progress(event) {
-        const t = event.progress;
-        svg.style('opacity', interpolateBackground(t));
-        oilProductionChart.style('opacity', interpolateOpacity(t));
-    }
-
-    function exit() {
-        oilProductionChart.style('opacity', 0);
+        const transition = d3.transition()
+            .duration(2000);
+        svg.transition(transition).style('opacity', 0.4);
+        oilProductionChart.transition(transition).style('opacity', 1);
     }
 
     scene
-        .on('enter', enter)
-        .on('progress', progress)
-        .on('exit', exit);
+        .on('enter', enter);
 
     return scene;
 }

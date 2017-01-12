@@ -4,9 +4,7 @@
 import ScrollMagic from 'scrollmagic';
 import * as d3 from 'd3';
 
-import renderNetworkLegend from './render-network-legend';
-
-import { defaultViewBox, tarSandsViewBox } from './view-box';
+import { defaultViewBox } from './view-box';
 
 export default function getScene4(app) {
     const svg = app.select('#pipe-background');
@@ -17,70 +15,41 @@ export default function getScene4(app) {
     const networkPipelines = svg.select('#NETWORK_PIPES');
     const allRefineries = svg.selectAll('.refineries');
     const regionNames = svg.selectAll('#Province_Names, #State_Names');
-    const legend = renderNetworkLegend(app)
-        .style('opacity', 0);
+    const legend = app.select('#network-legend');
+    const oilProductionChart = app.select('#oil-production-chart');
+    const cityNames = svg.select('#PIPELINE_CITY_NAMES');
+    const cityMarkers = svg.select('#Cities');
+    const slide5 = app.select('#slide-5');
 
     const scene = new ScrollMagic.Scene({
-        triggerElement: '#trigger-4',
+        triggerElement: '#slide-4',
         duration: '100%',
-        triggerHook: 0,
+        triggerHook: 1,
     });
-
-    const interpolateTarSands = d3.scaleLinear()
-        .domain([0, 0.33])
-        .range([1, 0.3])
-        .clamp(true);
-
-    const interpolateRivers = d3.scaleLinear()
-        .domain([0, 0.33])
-        .range([1, 0])
-        .clamp(true);
-
-    const interpolateRegionNames = d3.scaleLinear()
-        .domain([0, 0.33])
-        .range([1, 0])
-        .clamp(true);
-
-    const interpolateNetworkPipelines = d3.scaleLinear()
-        .domain([0, 0.33])
-        .range([0, 0.4])
-        .clamp(true);
-
-    const interpolateAllRefineries = d3.scaleLinear()
-        .domain([0, 0.33])
-        .range([0, 0.6])
-        .clamp(true);
-
-    const interpolateLegend = d3.scaleLinear()
-        .domain([0.4, 0.5, 0.9, 1])
-        .range([0, 1, 1, 0])
-        .clamp(true);
-
-    const interpolateViewBox = d3.scaleLinear()
-        .domain([0, 0.4])
-        .range([tarSandsViewBox, defaultViewBox])
-        .interpolate(d3.interpolateString)
-        .clamp(true);
 
     function enter() {
         pipelines.style('opacity', 0);
+
+        const transition = d3.transition()
+            .duration(2000);
+
+        tarSands.transition(transition).style('opacity', 0.3);
+        tarSandsLabel.transition(transition).style('opacity', 0.3);
+        rivers.transition(transition).style('opacity', 0);
+        regionNames.transition(transition).style('opacity', 0);
+        networkPipelines.transition(transition).style('opacity', 0.4);
+        allRefineries.transition(transition).style('opacity', 0.6);
+        svg.transition(transition)
+            .attr('viewBox', defaultViewBox)
+            .style('opacity', 1);
+        legend.transition(transition).style('opacity', 1);
+        oilProductionChart.transition(transition).style('opacity', 0);
+        cityMarkers.transition(transition).style('opacity', 0);
+        cityNames.transition(transition).style('opacity', 0);
+        slide5.style('opacity', 0);
     }
 
-    function progress(event) {
-        const t = event.progress;
-        tarSands.style('opacity', interpolateTarSands(t));
-        tarSandsLabel.style('opacity', interpolateTarSands(t));
-        rivers.style('opacity', interpolateRivers(t));
-        regionNames.style('opacity', interpolateRegionNames(t));
-        networkPipelines.style('opacity', interpolateNetworkPipelines(t));
-        allRefineries.style('opacity', interpolateAllRefineries(t));
-        svg.attr('viewBox', interpolateViewBox(t));
-        legend.style('opacity', interpolateLegend(t));
-    }
-
-    scene
-        .on('enter', enter)
-        .on('progress', progress);
+    scene.on('enter', enter);
 
     return scene;
 }

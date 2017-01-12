@@ -8,7 +8,6 @@ import * as d3 from 'd3';
 
 import { wiscMichViewBox } from './view-box';
 
-const strokeDasharray = '4, 8';
 const flowSpeed = 1 / 75;
 
 function bindPipelineData() {
@@ -22,6 +21,7 @@ export default function getScene7(app) {
     const svg = app.select('#pipe-background');
     const mapContainer = svg.select('.map-container');
     const detailedMap = svg.select('#detailed-map');
+    const oilImportsChart = app.select('#oil-imports-chart-container');
 
     const oilInPipelinesPathStrings = detailedMap.selectAll('#wisc-and-mich path, #into-superior path')
             .datum(bindPipelineData).data();
@@ -32,37 +32,15 @@ export default function getScene7(app) {
             .enter().append('path')
             .attr('class', d => `oil-in-${d.id}`)
             .attr('d', d => d.pathString)
-            .style('stroke-dasharray', strokeDasharray)
             .style('opacity', 0);
 
     const fourthLine = detailedMap.selectAll('#line-61-twin, #line-61-twin-illinois, .oil-in-line-61-twin');
 
     const scene = new ScrollMagic.Scene({
-        triggerElement: '#trigger-7',
+        triggerElement: '#slide-7',
         duration: '100%',
-        triggerHook: 0,
+        triggerHook: 1,
     });
-
-    // const interpolateViewBox = d3.scaleLinear()
-    //     .domain([0, 0.5])
-    //     .range([midwestViewBox, wiscMichViewBox])
-    //     .interpolate(d3.interpolateString)
-    //     .clamp(true);
-
-    // const interpolateOpacity = d3.scaleLinear()
-    //     .domain([0.2, 0.4])
-    //     .range([0, 1])
-    //     .clamp(true);
-
-    // const interpolateOverviewMap = d3.scaleLinear()
-    //     .domain([0.2, 0.4])
-    //     .range([1, 0])
-    //     .clamp(true);
-
-    // const interpolateDetailMap = d3.scaleLinear()
-    //     .domain([0.2, 0.4])
-    //     .range([0, 1])
-    //     .clamp(true);
 
     function flow(elapsed) {
         const offset = elapsed * flowSpeed;
@@ -73,19 +51,18 @@ export default function getScene7(app) {
     timer.stop();
 
     // Bind the timer to the app node
-    app.datum({ timer, ticking: false });
+    app.datum({ timer });
 
     function enter() {
-        timer.restart(flow);
+        // timer.restart(flow);
         detailedMap.style('display', null);
-
-        // const forward = event.scrollDirection === 'FORWARD';
 
         const transition = d3.transition()
             .duration(2000);
 
         svg.transition(transition)
-            .attr('viewBox', wiscMichViewBox);
+            .attr('viewBox', wiscMichViewBox)
+            .style('opacity', 1);
 
         mapContainer.transition(transition)
             .style('opacity', 0);
@@ -98,15 +75,12 @@ export default function getScene7(app) {
 
         fourthLine.transition(transition)
             .style('opacity', 0);
+
+        oilImportsChart.transition(transition)
+            .style('opacity', 0);
     }
 
-    function leave() {
-        timer.stop(flow);
-    }
-
-    scene
-        .on('enter', enter)
-        .on('leave', leave);
+    scene.on('enter', enter);
 
     return scene;
 }

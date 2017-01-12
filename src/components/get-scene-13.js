@@ -5,7 +5,10 @@ import * as d3 from 'd3';
 
 import { wiscViewBox } from './view-box';
 
-const flowSpeed = 1 / 40;
+// const finalFlowSpeed = 1 / 20;
+// const startFlowSpeed = 1 / 75;
+// const interpolateFlowSpeed = d3.interpolateNumber(startFlowSpeed, finalFlowSpeed);
+const flowSpeed = 1 / 20;
 
 function filterOutline5() {
     const className = d3.select(this).attr('class');
@@ -21,21 +24,10 @@ export default function getScene12(app) {
         .filter(filterOutline5);
 
     const scene = new ScrollMagic.Scene({
-        triggerElement: '#trigger-13',
+        triggerElement: '#slide-13',
         duration: '100%',
-        triggerHook: 0,
+        triggerHook: 1,
     });
-
-    // const interpolateViewBox = d3.scaleLinear()
-    //     .domain([0, 0.6])
-    //     .range([mackinacViewBox, wiscViewBox])
-    //     .interpolate(d3.interpolateString)
-    //     .clamp(true);
-
-    // const interpolateOilInPipelines = d3.scaleLinear()
-    //     .domain([0.9, 1])
-    //     .range([1, 0])
-    //     .clamp(true);
 
     const timer = app.datum().timer;
 
@@ -45,9 +37,9 @@ export default function getScene12(app) {
     }
 
     function enter() {
-        timer.restart(flow);
-
         // const forward = event.scrollDirection === 'FORWARD';
+
+        // timer.restart(flow);
 
         const transition = d3.transition()
             .duration(2500);
@@ -56,13 +48,8 @@ export default function getScene12(app) {
         oilInPipelines.transition(transition).style('opacity', 1);
     }
 
-    function leave() {
-        timer.stop();
-    }
-
     scene
-        .on('enter', enter)
-        .on('leave', leave);
+        .on('enter', enter);
 
     return scene;
 }

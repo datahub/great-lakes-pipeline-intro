@@ -3,65 +3,70 @@
 
 import ScrollMagic from 'scrollmagic';
 import * as d3 from 'd3';
-import oilSpillsData from '../data/oil-spills';
-import renderSpillLegend from './render-spill-legend';
+import { wiscMichViewBox } from './view-box';
 
-const oilSpillByKey = d3.map(oilSpillsData, d => d.key);
-
-function bindOilSpillData() {
-    const key = d3.select(this).attr('id');
-    return oilSpillByKey.get(key);
-}
+const lakeMichiganSpillData = [
+    { r: 20, t0: 0.1, endOpacity: 0.30, blur: true },
+    { r: 40, t0: 0.2, endOpacity: 0.25, blur: true },
+    { r: 60, t0: 0.3, endOpacity: 0.20, blur: true },
+    { r: 80, t0: 0.4, endOpacity: 0.15, blur: true },
+    { r: 90, t0: 0.5, endOpacity: 0.10, blur: true },
+    { r: 100, t0: 0.6, endOpacity: 0.05, blur: true },
+    { r: 5, t0: 0.0, endOpacity: 1.00, blur: false, className: 'spill-epicenter' },
+];
 
 export default function getScene10(app) {
     const svg = app.select('#pipe-background');
     const detailedMap = svg.select('#detailed-map');
-    const legend = renderSpillLegend(app)
+    const spillLegend = detailedMap.select('#spill-legend');
+    const oilSpills = detailedMap.select('#oil-spills');
+    const oilSpill = oilSpills.selectAll('circle');
+    const oilInPipelines = detailedMap.select('.oil-in-pipelines')
+        .selectAll('path');
+
+    const lakeMichiganSpill = detailedMap.select('#background').insert('g', '#nations')
+        .attr('id', 'lake-michigan-spill')
+        .attr('class', 'oil-spill')
+        .attr('transform', 'translate(1604, 561)')
         .style('opacity', 0);
 
-    const oilSpills = detailedMap.select('#oil-spills');
-
-    const oilSpill = oilSpills.selectAll('circle')
-        .datum(bindOilSpillData)
-        .attr('fill', null)
-        .attr('r', 0)
-        .style('fill', '#000')
-        .style('fill-opacity', 0.5)
-        .style('stroke', '#000');
+    lakeMichiganSpill.selectAll('.spill-layer').data(lakeMichiganSpillData)
+        .enter().append('circle')
+            .attr('class', d => `spill-layer ${d.className || ''}`)
+            .attr('r', d => d.r)
+            .attr('filter', d => (d.blur ? 'url(#spill-blur)' : null))
+            .style('opacity', d => d.endOpacity);
 
     const scene = new ScrollMagic.Scene({
-        triggerElement: '#trigger-10',
+        triggerElement: '#slide-10',
         duration: '100%',
-        triggerHook: 0,
+        triggerHook: 1,
     });
 
-    const areaScale = d3.scaleLinear()
-        .domain([0, d3.max(oilSpillsData, d => d.spilled)])
-        .range([250, 4000]);
+    function enter() {
+        const transition = d3.transition()
+            .duration(2000);
 
-    const interpolateOilSpill = d3.scaleLinear()
-        .domain([0, 0.33])
-        .range([0, 1])
-        .clamp(true);
+        svg.transition(transition).attr('viewBox', wiscMichViewBox);
 
-    const interpolateLegend = d3.scaleLinear()
-        .domain([0, 0.33, 0.95, 1])
-        .range([0, 1, 1, 0])
-        .clamp(true);
+        oilInPipelines.transition(transition).style('opacity', 1);
 
-    oilSpill.data().forEach((d) => {
-        const area = areaScale(d.spilled);
-        d.r = Math.sqrt(area / Math.PI);
-    });
+        oilSpills.transition(transition).style('opacity', 1);
 
-    function progress(event) {
-        const t = event.progress;
-        oilSpill.attr('r', d => interpolateOilSpill(t) * d.r);
-        legend.style('opacity', interpolateLegend(t));
+        oilSpill
+                .attr('r', 0)
+            .transition(transition)
+                .attr('r', d => d.r);
+
+        spillLegend.transition(transition)
+            .style('opacity', 1);
+
+        lakeMichiganSpill.transition(transition)
+            .style('opacity', 0);
     }
 
     scene
-        .on('progress', progress);
+        .on('enter', enter);
 
     return scene;
 }

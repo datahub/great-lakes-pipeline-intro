@@ -3,45 +3,55 @@
 import ScrollMagic from 'scrollmagic';
 import * as d3 from 'd3';
 
+import { mackinacViewBox } from './view-box';
+
+const flowSpeed = 1 / 75;
+
 export default function getScene12(app) {
     const svg = app.select('#pipe-background');
     const detailedMap = svg.select('#detailed-map');
     const pipelineLine5 = detailedMap.select('#line-5');
+    const oilInPipelineLine5 = detailedMap.select('.oil-in-line-5');
+    const oilSpill = detailedMap.select('.oil-spill');
     const oilInPipelines = detailedMap.select('.oil-in-pipelines')
         .selectAll('path');
-    const oilSpill = detailedMap.select('.oil-spill');
 
     const scene = new ScrollMagic.Scene({
-        triggerElement: '#trigger-12',
+        triggerElement: '#slide-12',
         duration: '100%',
-        triggerHook: 0,
+        triggerHook: 1,
     });
 
-    // const interpolateLineOpacity = d3.scaleLinear()
-    //     .domain([0.1, 0.4])
-    //     .range([1, 0])
-    //     .clamp(true);
+    const timer = app.datum().timer;
+
+    function flow(elapsed) {
+        const offset = elapsed * flowSpeed;
+        oilInPipelines.style('stroke-dashoffset', -offset);
+    }
+
 
     function enter(event) {
         const forward = event.scrollDirection === 'FORWARD';
 
-        oilInPipelines.style('opacity', 0);
+        // timer.restart(flow);
+
+        const transition0 = d3.transition()
+            .duration(2000);
+
+        svg.transition(transition0).attr('viewBox', mackinacViewBox);
 
         if (forward) {
-            const transition0 = d3.transition()
-                .duration(1000);
-
             oilSpill.transition(transition0)
                 .style('opacity', 0)
                 .on('end', () => {
                     const transition1 = d3.transition()
                         .duration(2000);
                     pipelineLine5.transition(transition1).style('opacity', 0);
+                    oilInPipelineLine5.transition(transition1).style('opacity', 0);
                 });
         } else {
-            const transition = d3.transition()
-                .duration(1000);
-            pipelineLine5.transition(transition).style('opacity', 1);
+            pipelineLine5.transition(transition0).style('opacity', 1);
+            oilInPipelineLine5.transition(transition0).style('opacity', 1);
         }
     }
 

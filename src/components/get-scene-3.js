@@ -3,6 +3,8 @@
 
 import ScrollMagic from 'scrollmagic';
 import * as d3 from 'd3';
+import renderNetworkLegend from './render-network-legend';
+import { tarSandsViewBox } from './view-box';
 import { chartScene2 } from './render-oil-chart';
 
 export default function getScene3(app) {
@@ -10,43 +12,49 @@ export default function getScene3(app) {
     const oilProductionChart = app.select('#oil-production-chart')
         .style('opacity', 0);
     const pipelines = svg.selectAll('.pipeline');
+    const tarSands = svg.select('#TAR_SANDS');
+    const tarSandsLabel = svg.select('#tar-sands-label');
+    const rivers = svg.select('#Major_Rivers');
+    const networkPipelines = svg.select('#NETWORK_PIPES');
+    const allRefineries = svg.selectAll('.refineries');
+    const regionNames = svg.selectAll('#Province_Names, #State_Names');
+    const legend = renderNetworkLegend(app)
+        .style('opacity', 0);
 
     const scene = new ScrollMagic.Scene({
-        triggerElement: '#trigger-3',
+        triggerElement: '#slide-3',
         duration: '100%',
-        triggerHook: 0,
+        triggerHook: 1,
     });
 
-    const interpolateOpacity = d3.scaleLinear()
-        .domain([0.95, 1])
-        .range([1, 0])
-        .clamp(true);
-
-    const interpolateBackground = d3.scaleLinear()
-        .domain([0.8, 1])
-        .range([0.5, 1])
-        .clamp(true);
-
     function enter(event) {
+        const forward = event.scrollDirection === 'FORWARD';
         pipelines.style('opacity', 0);
-        const transitionDuration = event.scrollDirection === 'FORWARD' ? 2000 : 0;
-        chartScene2(transitionDuration);
-    }
 
-    function progress(event) {
-        const t = event.progress;
-        svg.style('opacity', interpolateBackground(t));
-        oilProductionChart.style('opacity', interpolateOpacity(t));
-    }
+        const transition = d3.transition()
+            .duration(2000);
 
-    function exit() {
-        oilProductionChart.style('opacity', 0);
+        chartScene2(forward ? 2000 : 0);
+
+        oilProductionChart.transition(transition).style('opacity', 1);
+
+        svg.transition(transition)
+                .attr('viewBox', tarSandsViewBox)
+                .style('opacity', 0.4);
+
+        if (!forward) {
+            tarSands.transition(transition).style('opacity', 1);
+            tarSandsLabel.transition(transition).style('opacity', 1);
+            rivers.transition(transition).style('opacity', 1);
+            regionNames.transition(transition).style('opacity', 1);
+            networkPipelines.transition(transition).style('opacity', 0);
+            allRefineries.transition(transition).style('opacity', 0);
+            legend.transition(transition).style('opacity', 0);
+        }
     }
 
     scene
-        .on('enter', enter)
-        .on('progress', progress)
-        .on('exit', exit);
+        .on('enter', enter);
 
     return scene;
 }
