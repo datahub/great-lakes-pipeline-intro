@@ -10,6 +10,7 @@ export default function getScene2(app) {
     const svg = app.select('#pipe-background');
     const oilProductionChart = app.select('#oil-production-chart')
         .style('opacity', 0);
+    const whiteOverlay = svg.select('#white-overlay');
 
     const scene = new ScrollMagic.Scene({
         triggerElement: '#slide-2',
@@ -22,7 +23,7 @@ export default function getScene2(app) {
 
         const transition = d3.transition()
             .duration(2000);
-        svg.transition(transition).style('opacity', 0.4);
+        whiteOverlay.transition(transition).style('opacity', 0.8);
         oilProductionChart.transition(transition).style('opacity', 1);
     }
 

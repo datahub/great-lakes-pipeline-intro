@@ -8,8 +8,6 @@ import * as d3 from 'd3';
 
 import { wiscMichViewBox } from './view-box';
 
-const flowSpeed = 1 / 75;
-
 function bindPipelineData() {
     return {
         pathString: d3.select(this).attr('d'),
@@ -22,6 +20,7 @@ export default function getScene7(app) {
     const mapContainer = svg.select('.map-container');
     const detailedMap = svg.select('#detailed-map');
     const oilImportsChart = app.select('#oil-imports-chart-container');
+    const whiteOverlay = svg.select('#white-overlay');
 
     const oilInPipelinesPathStrings = detailedMap.selectAll('#wisc-and-mich path, #into-superior path')
             .datum(bindPipelineData).data();
@@ -42,33 +41,32 @@ export default function getScene7(app) {
         triggerHook: 1,
     });
 
-    function flow(elapsed) {
-        const offset = elapsed * flowSpeed;
-        oilInPipelines.style('stroke-dashoffset', -offset);
-    }
-
-    const timer = d3.interval(flow, 66);
-    timer.stop();
-
-    // Bind the timer to the app node
-    app.datum({ timer });
-
-    function enter() {
-        // timer.restart(flow);
-        detailedMap.style('display', null);
+    function enter(event) {
+        const forward = event.scrollDirection === 'FORWARD';
 
         const transition = d3.transition()
-            .duration(2000);
+            .duration(2000)
+            .on('end', () => {
+                mapContainer.style('display', 'none');
+            });
+
+        whiteOverlay.transition(transition).style('opacity', 0);
 
         svg.transition(transition)
             .attr('viewBox', wiscMichViewBox)
             .style('opacity', 1);
 
-        mapContainer.transition(transition)
-            .style('opacity', 0);
+        mapContainer
+                .style('display', null)
+                .style('opacity', forward ? 1 : 0)
+            .transition(transition)
+                .style('opacity', 0);
 
-        detailedMap.transition(transition)
-            .style('opacity', 1);
+        detailedMap
+                .style('display', null)
+                .style('opacity', forward ? 0 : 1)
+            .transition(transition)
+                .style('opacity', 1);
 
         oilInPipelines.transition(transition)
             .style('opacity', 1);

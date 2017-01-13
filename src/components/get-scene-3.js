@@ -20,6 +20,8 @@ export default function getScene3(app) {
     const regionNames = svg.selectAll('#Province_Names, #State_Names');
     const legend = renderNetworkLegend(app)
         .style('opacity', 0);
+    const whiteOverlay = svg.select('#white-overlay');
+    const slide5 = app.select('#slide-5');
 
     const scene = new ScrollMagic.Scene({
         triggerElement: '#slide-3',
@@ -30,6 +32,7 @@ export default function getScene3(app) {
     function enter(event) {
         const forward = event.scrollDirection === 'FORWARD';
         pipelines.style('opacity', 0);
+        slide5.interrupt().style('opacity', 0);
 
         const transition = d3.transition()
             .duration(2000);
@@ -39,8 +42,9 @@ export default function getScene3(app) {
         oilProductionChart.transition(transition).style('opacity', 1);
 
         svg.transition(transition)
-                .attr('viewBox', tarSandsViewBox)
-                .style('opacity', 0.4);
+            .attr('viewBox', tarSandsViewBox);
+
+        whiteOverlay.transition(transition).style('opacity', 0.8);
 
         if (!forward) {
             tarSands.transition(transition).style('opacity', 1);

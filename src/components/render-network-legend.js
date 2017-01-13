@@ -2,7 +2,7 @@ export default function renderNetworkLegend(app) {
     const width = 200;
     const height = 100;
 
-    const legend = app.append('div')
+    const legend = app.insert('div', '#bottom-links')
         .attr('id', 'network-legend');
 
     const svg = legend.append('svg')

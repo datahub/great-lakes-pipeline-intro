@@ -20,9 +20,11 @@ function bindOilSpillData() {
 export default function getScene9(app) {
     const svg = app.select('#pipe-background');
     const detailedMap = svg.select('#detailed-map');
+    const mapContainer = svg.select('.map-container');
     const oilImportsChart = app.select('#oil-imports-chart-container');
     const oilInPipelines = detailedMap.select('.oil-in-pipelines')
         .selectAll('path');
+    const whiteOverlay = svg.select('#white-overlay');
 
     const fourthLine = detailedMap.selectAll('#line-61-twin, #line-61-twin-illinois')
         .style('opacity', 0);
@@ -61,6 +63,9 @@ export default function getScene9(app) {
     });
 
     function enter() {
+        mapContainer.style('opacity', 0).style('display', 'none');
+        detailedMap.style('opacity', 1).style('display', null);
+
         svg.attr('viewBox', wiscMichViewBox);
         otherPipelines.classed('unfocused-pipeline', true);
         focusedLine.classed('focused-pipeline', true);
@@ -69,6 +74,7 @@ export default function getScene9(app) {
         const transition = d3.transition()
             .duration(500);
 
+        whiteOverlay.transition(transition).style('opacity', 0);
         svg.transition(transition).style('opacity', 1);
         oilSpills.transition(transition).style('opacity', 0);
         spillLegend.transition(transition).style('opacity', 0);

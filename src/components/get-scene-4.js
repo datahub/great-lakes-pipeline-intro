@@ -20,6 +20,7 @@ export default function getScene4(app) {
     const cityNames = svg.select('#PIPELINE_CITY_NAMES');
     const cityMarkers = svg.select('#Cities');
     const slide5 = app.select('#slide-5');
+    const whiteOverlay = svg.select('#white-overlay');
 
     const scene = new ScrollMagic.Scene({
         triggerElement: '#slide-4',
@@ -28,11 +29,13 @@ export default function getScene4(app) {
     });
 
     function enter() {
-        pipelines.style('opacity', 0);
+        pipelines.interrupt().style('opacity', 0);
+        slide5.interrupt().style('opacity', 0);
 
         const transition = d3.transition()
             .duration(2000);
 
+        whiteOverlay.transition(transition).style('opacity', 0);
         tarSands.transition(transition).style('opacity', 0.3);
         tarSandsLabel.transition(transition).style('opacity', 0.3);
         rivers.transition(transition).style('opacity', 0);
@@ -46,7 +49,6 @@ export default function getScene4(app) {
         oilProductionChart.transition(transition).style('opacity', 0);
         cityMarkers.transition(transition).style('opacity', 0);
         cityNames.transition(transition).style('opacity', 0);
-        slide5.style('opacity', 0);
     }
 
     scene.on('enter', enter);

@@ -25,38 +25,44 @@ export default function getScene6(app) {
     });
 
     function enter() {
+        mapContainer.style('opacity', 1).style('display', null);
+        detailedMap.style('opacity', 0).style('display', 'none');
+
         pipelineEnbridge.selectAll('path').style('stroke-width', 2);
         pipelineAlbertaClipper.selectAll('path').style('stroke-width', 2);
         pipelineSouthernLights.selectAll('path').style('stroke-width', 2);
 
-        // const forward = event.scrollDirection === 'FORWARD';
+        const transition0 = d3.transition()
+            .duration(500);
 
-        const transition = d3.transition()
-            .duration(2000);
+        slide5.transition(transition0).style('opacity', 0)
+            .on('end', () => {
+                const transition1 = d3.transition()
+                    .duration(2000);
 
-        svg.transition(transition).attr('viewBox', midwestViewBox);
+                svg.transition(transition1).attr('viewBox', midwestViewBox);
 
-        slide5.transition(transition).style('opacity', 0);
-        mapContainer.transition(transition).style('opacity', 1);
-        detailedMap.transition(transition).style('opacity', 0);
+                mapContainer.transition(transition1).style('opacity', 1);
+                detailedMap.transition(transition1).style('opacity', 0);
 
-        pipelines.transition(transition).style('opacity', 0);
-        offPipelineCity.transition(transition).style('opacity', 0);
+                pipelines.transition(transition1).style('opacity', 0);
+                offPipelineCity.transition(transition1).style('opacity', 0);
 
-        pipelineEnbridge.transition(transition)
-                .style('opacity', 1)
-            .selectAll('path')
-                .style('stroke', '#AB88BF');
+                pipelineEnbridge.transition(transition1)
+                        .style('opacity', 1)
+                    .selectAll('path')
+                        .style('stroke', '#AB88BF');
 
-        pipelineAlbertaClipper.transition(transition)
-                .style('opacity', 1)
-            .selectAll('path')
-                .style('stroke', '#77BB72');
+                pipelineAlbertaClipper.transition(transition1)
+                        .style('opacity', 1)
+                    .selectAll('path')
+                        .style('stroke', '#77BB72');
 
-        pipelineSouthernLights.transition(transition)
-                .style('opacity', 1)
-            .selectAll('path')
-                .style('stroke', '#6D90B5');
+                pipelineSouthernLights.transition(transition1)
+                        .style('opacity', 1)
+                    .selectAll('path')
+                        .style('stroke', '#6D90B5');
+            });
     }
 
     function leave(event) {

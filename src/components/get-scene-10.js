@@ -17,6 +17,7 @@ const lakeMichiganSpillData = [
 
 export default function getScene10(app) {
     const svg = app.select('#pipe-background');
+    const mapContainer = svg.select('.map-container');
     const detailedMap = svg.select('#detailed-map');
     const spillLegend = detailedMap.select('#spill-legend');
     const oilSpills = detailedMap.select('#oil-spills');
@@ -34,7 +35,7 @@ export default function getScene10(app) {
         .enter().append('circle')
             .attr('class', d => `spill-layer ${d.className || ''}`)
             .attr('r', d => d.r)
-            .attr('filter', d => (d.blur ? 'url(#spill-blur)' : null))
+            // .attr('filter', d => (d.blur ? 'url(#spill-blur)' : null))
             .style('opacity', d => d.endOpacity);
 
     const scene = new ScrollMagic.Scene({
@@ -44,6 +45,9 @@ export default function getScene10(app) {
     });
 
     function enter() {
+        mapContainer.style('opacity', 0).style('display', 'none');
+        detailedMap.style('opacity', 1).style('display', null);
+
         const transition = d3.transition()
             .duration(2000);
 

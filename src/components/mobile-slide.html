@@ -1,0 +1,26 @@
+<table class="mobile-progress"><tr></tr></table>
+<div class="mobile-slide" id="mobile-slide-first">
+    <h1 class="mjs-headline">Oil and Water</h1>
+    <h3 class="mjs-deck">Pipeline pressure builds in the Great Lakes</h3>
+    <p class="mjs-mobile-swipe">Swipe to continue</p>
+    <img class="mjs-mobile-arrow" src="../media/prompt-arrow.png" alt="Swipe">
+</div>
+{{#slideData}}
+<div class="mobile-slide" style="height:{{viewHeight}}px; top:{{viewHeight}}px; z-index:{{i}};">
+	<p class="mobile-slide-text">{{{html}}}</p>
+	<img class="mobile-slide-graphic" src="{{graphic}}">
+</div>
+{{/slideData}}
+<div class="mobile-slide" id="mobile-slide-last" style="height:{{viewHeight}}px; top:{{viewHeight}}px; z-index:30;">
+    <p style="padding:20% 0 20px 0; font-size: 24px;">Follow the oil</p>
+    <p class="mobile-link-head">
+        <a href="http://projects.jsonline.com/news/2017/1/15/path-of-least-resistance.html">
+            <img class="mjs-mobile-img-link" src="../media/wisconsin.png">
+            Part 1: Path of Least Resistance
+        </a>
+    </p>
+    <p class="mobile-link-head">
+        <img class="mjs-mobile-img-link" src="../media/michigan.png">
+        Part 2: Coming Wednesday
+    </p>
+</div>

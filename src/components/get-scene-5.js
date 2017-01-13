@@ -59,6 +59,8 @@ function bindPipelineLengths(selection) {
 
 export default function getScene5(app) {
     const svg = app.select('#pipe-background');
+    const mapContainer = svg.select('.map-container');
+    const detailedMap = svg.select('#detailed-map');
     const rivers = svg.select('#Major_Rivers');
     const cityNames = svg.select('#PIPELINE_CITY_NAMES');
     const cityMarkers = svg.select('#Cities');
@@ -127,6 +129,9 @@ export default function getScene5(app) {
     }
 
     function enter1() {
+        mapContainer.style('opacity', 1).style('display', null);
+        detailedMap.style('opacity', 0).style('display', 'none');
+
         pipelines.style('opacity', 1)
                 .style('opacity', 1)
             .selectAll('path')
@@ -219,23 +224,44 @@ export default function getScene5(app) {
 
     function enter5() {
         const transition0 = d3.transition()
-            .duration(2000);
+            .duration(500);
 
-        pipelineEnergyEast
-            .transition(transition0)
-                .style('opacity', 1)
-                .styleTween('stroke-dashoffset', tweenStrokeDashoffset)
-            .selectAll('path')
-                .style('stroke', colorEnergyEast);
+        slideText.transition(transition0).style('opacity', 1)
+            .on('end', () => {
+                const transition1 = d3.transition()
+                    .duration(2000);
 
-        textProposedKeystone.call(styleBefore);
-        textDakotaAccess.call(styleBefore);
-        textNorthernGateway.call(styleBefore);
-        textTransmountain.call(styleBefore);
-        textEnergyEast.call(styleCurrent);
+                pipelineEnergyEast
+                    .transition(transition1)
+                        .style('opacity', 1)
+                        .styleTween('stroke-dashoffset', tweenStrokeDashoffset)
+                    .selectAll('path')
+                        .style('stroke', colorEnergyEast);
+
+                textProposedKeystone.call(styleBefore);
+                textDakotaAccess.call(styleBefore);
+                textNorthernGateway.call(styleBefore);
+                textTransmountain.call(styleBefore);
+                textEnergyEast.call(styleCurrent);
+            });
+
+        mapContainer.style('opacity', 1).style('display', null);
+        detailedMap.style('opacity', 0).style('display', 'none');
     }
 
-    slide1.on('enter', enter1);
+    function leave1(event) {
+        const forward = event.scrollDirection === 'FORWARD';
+        if (!forward) {
+            pipelineProposedKeystone.style('opacity', 0);
+            pipelineDakotaAccess.style('opacity', 0);
+            pipelineNorthernGateway.style('opacity', 0);
+            pipelineTransmountain.style('opacity', 0);
+            pipelineEnergyEast.style('opacity', 0);
+            pipelines.style('opacity', 0);
+        }
+    }
+
+    slide1.on('enter', enter1).on('leave', leave1);
     slide2.on('enter', enter2);
     slide3.on('enter', enter3);
     slide4.on('enter', enter4);

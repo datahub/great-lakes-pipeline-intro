@@ -14,8 +14,8 @@ export default function renderSpillLegend(app) {
     g.append('rect')
         .attr('x', -19)
         .attr('y', -15)
-        .attr('width', 230)
-        .attr('height', 180)
+        .attr('width', 245)
+        .attr('height', 220)
         .style('fill', '#fff')
         .style('fill-opacity', 0.8);
 
@@ -23,17 +23,26 @@ export default function renderSpillLegend(app) {
         .attr('x', -19)
         .attr('y', -15)
         .attr('width', 4)
-        .attr('height', 180)
+        .attr('height', 220)
         .style('fill', '#636363');
 
-    g.append('text')
+    const text = g.append('text')
         .attr('class', 'legend-title')
-        .attr('x', 25)
-        .attr('y', 30)
-        .style('font-size', '30px')
         .style('font-weight', 'bold')
-        .style('fill', '#333')
+        .style('fill', '#333');
+
+    text.append('tspan')
+        .attr('x', 0)
+        .attr('y', 33)
+        .style('font-size', '35px')
         .text('Oil spills');
+
+    text.append('tspan')
+        .attr('x', 0)
+        .attr('y', 33)
+        .attr('dy', '1.3em')
+        .style('font-size', '25px')
+        .text('in the last decade');
 
     const areaScale = d3.scaleLinear()
         .domain([0, 20082])
@@ -59,7 +68,7 @@ export default function renderSpillLegend(app) {
     const item = g.selectAll('.legend-item').data(itemData)
         .enter().append('g')
             .attr('class', 'legend-item')
-            .attr('transform', d => `translate(${d.x}, ${45})`);
+            .attr('transform', d => `translate(${d.x}, ${90})`);
 
     item.append('circle')
         .attr('cy', d => d.r)

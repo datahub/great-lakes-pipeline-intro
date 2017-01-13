@@ -7,7 +7,7 @@ const height = 300 - margin.top - margin.bottom;
 
 const app = d3.select('#intro-interactive');
 
-const container = app.append('div')
+const container = app.insert('div', '#bottom-links')
     .attr('id', 'oil-production-chart-container');
 
 const svg = container.append('svg')
