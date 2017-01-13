@@ -1,9 +1,9 @@
 import * as d3 from 'd3';
 import oilProduction from '../data/oil-production';
 
-const margin = { top: 20, left: 20, bottom: 40, right: 120 };
+const margin = { top: 20, left: 20, bottom: 60, right: 120 };
 const width = 600 - margin.left - margin.right;
-const height = 300 - margin.top - margin.bottom;
+const height = 320 - margin.top - margin.bottom;
 
 const app = d3.select('#intro-interactive');
 
@@ -184,6 +184,17 @@ chartTitle.append('tspan')
     .attr('x', 3)
     .attr('dy', '1.2em')
     .text('in Tar Sands');
+
+// Data attribution
+g.append('text')
+    .attr('class', 'chart-data-attribution')
+    .attr('x', 0)
+    .attr('y', height)
+    .attr('dy', '55px')
+    .style('font-size', '14px')
+    .style('text-anchor', 'start')
+    .style('fill', '#aaa')
+    .text('Data source: Alberta Energy Regulator');
 
 export function chartScene1() {
     areaPath0.style('fill-opacity', null);

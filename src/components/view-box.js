@@ -1,5 +1,5 @@
 // viewBox: xMin yMin width height
-export const defaultViewBox = '300 700 1200 950';
+export const defaultViewBox = '300 690 1200 960';
 export const tarSandsViewBox = '300 600 700 400';
 export const midwestViewBox = '682 700 693 559';
 export const wiscMichViewBox = '952 1019 347 183';

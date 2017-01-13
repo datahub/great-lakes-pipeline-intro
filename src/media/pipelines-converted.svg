@@ -2421,7 +2421,7 @@
 	<circle class="st41" cx="1025" cy="1500" r="4"></circle>
 	<circle class="st41" cx="997.5" cy="1522.4" r="4"></circle>
 </g>
-<image id="NETWORK_PIPES" xlink:href="media/pipeline-network.png" />
+<image id="NETWORK_PIPES" xlink:href="media/pipeline-network.png" x="0" y="0" width="1087px" height="859px" />
 <g id="NETWORK_REFINERIES" class="st55 refineries">
 	<g class="st39">
 		<path d="M1451.4,1197.5c-1.9,0-3.5-1.6-3.5-3.5s1.6-3.5,3.5-3.5s3.5,1.6,3.5,3.5S1453.4,1197.5,1451.4,1197.5z"></path>

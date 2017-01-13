@@ -54,14 +54,17 @@ export default function getScene12(app) {
                     oilInPipelineLine5.transition(transition1).style('opacity', 0);
                 });
         } else {
+            const transition2 = d3.transition()
+                .duration(2000);
+
             pipelineLine5
-                    .style('opacity', 0)
-                .transition(transition0)
-                    .style('opacity', 1);
+                    .style('opacity', 1)
+                .transition(transition2)
+                    .style('opacity', 0);
             oilInPipelineLine5
-                    .style('opacity', 0)
-                .transition(transition0)
-                    .style('opacity', 1);
+                    .style('opacity', 1)
+                .transition(transition2)
+                    .style('opacity', 0);
         }
     }
 
